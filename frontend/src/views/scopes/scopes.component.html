@@ -1,0 +1,36 @@
+<div class="m-2">
+    <button (click)="addStudent()" color="primary" mat-raised-button>添加学生</button>
+    <button (click)="addScopeType()" color="primary" mat-raised-button>添加考试</button>
+    <table (matSortChange)="sortChange($event)" [dataSource]="dataSource" class="mat-elevation-z8" mat-table matSort>
+        @for (column of displayedColumns(); track column) {
+
+            @if (column === 'actions') {
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button (click)="delStudent(element.name)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+            } @else if (column === 'name') {
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                    <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
+                </ng-container>
+            } @else {
+                <ng-container matColumnDef="{{column}}">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column }}</th>
+                    <td mat-cell *matCellDef="let element"
+                        (click)="updateScopeNumber(element.name, column, element.scopes[column])" matRipple
+                        class="cursor-pointer">
+                        <span>{{ element.scopes[column] }}</span>
+                    </td>
+                </ng-container>
+            }
+        }
+
+        <tr *matHeaderRowDef="displayedColumns()" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns();" mat-row></tr>
+    </table>
+</div>

@@ -78,6 +78,7 @@ func (a *App) DownloadRuiWenUrl(link string) (string, error) {
 	u, err := url.Parse(link)
 	if err != nil {
 		return "", fmt.Errorf("invalid url: %s", link)
+
 	}
 
 	if !strings.Contains(u.Host, "ruiwen.com") {

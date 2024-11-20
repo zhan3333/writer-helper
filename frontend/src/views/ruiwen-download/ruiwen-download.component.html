@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="m-2">
     <mat-card-content>
         <div class="flex flex-col">
             <mat-form-field>
@@ -12,7 +12,7 @@
         </div>
     </mat-card-content>
 </mat-card>
-<mat-card *ngIf="content()">
+<mat-card *ngIf="content()" class="mt-2">
     <mat-card-header>
         <mat-card-actions>
             <button (click)="copyContent()" color="primary" mat-raised-button>复制</button>

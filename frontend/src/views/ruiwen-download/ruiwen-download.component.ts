@@ -70,8 +70,8 @@ export class RuiwenDownloadComponent {
             range.selectNodeContents(text);
             selection.removeAllRanges();
             selection.addRange(range);
-            navigator.clipboard.writeText(selection.toString());
-            this.snack.open('复制成功，可以到 word 中粘贴')
+            await navigator.clipboard.writeText(selection.toString());
+            this.snack.open('复制成功，可以到 word 中粘贴', '关闭')
         } else {
             alert("none");
         }
