@@ -1,0 +1,13 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "writer-helper",
+  "outputfilename": "writer-helper",
+  "frontend:build": "npx ng build",
+  "frontend:install": "npm install",
+  "frontend:dev:watcher": "npx ng serve",
+  "frontend:dev:serverUrl": "http://localhost:4200",
+  "author": {
+    "name": "zhan",
+    "email": "grianchan@gmail.com"
+  }
+}

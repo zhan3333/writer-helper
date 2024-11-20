@@ -1,0 +1,29 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>下载视频</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="flex flex-col">
+            <mat-form-field>
+                <mat-label>视频链接</mat-label>
+                <input [(ngModel)]="videoUrl" matInput>
+            </mat-form-field>
+            <div class="w-full flex">
+                <mat-form-field class="flex-grow">
+                    <mat-label>保存文件夹</mat-label>
+                    <input [(ngModel)]="savePath" disabled matInput>
+                </mat-form-field>
+                <button (click)="selectSaveDirectory()" color="primary" mat-raised-button>更改</button>
+            </div>
+            <div>
+                <p class="whitespace-pre">{{ downloadOutput() }}</p>
+            </div>
+
+
+            <button (click)="downloadVideo()" [disabled]="videoUrl().length == 0 || downloading()" color="primary"
+                    mat-raised-button>
+                {{ downloading() ? '下载中...' : '下载' }}
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>
