@@ -1,6 +1,6 @@
 .PHONY: build_windows
 build_windows:
-	wails build -clean -platform windows/amd64
+	wails build -clean -debug -platform windows/amd64
 
 .PHONY: build
 build:
@@ -9,3 +9,7 @@ build:
 .PHONY: run
 run:
 	wails dev
+
+.PHONY: run_server
+run_server:
+	cd server && go run main.go

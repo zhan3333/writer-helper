@@ -1,5 +1,6 @@
-import {computed, Injectable, signal} from '@angular/core';
+import {computed, inject, Injectable, signal} from '@angular/core';
 import {SortDirection} from "@angular/material/sort";
+import {CacheService} from "../../shared/cache.service";
 
 export type ScopeType = string
 
@@ -10,11 +11,25 @@ export interface Scope {
     }
 }
 
+export interface ScopeWithRank {
+    name: string;
+    scopes: {
+        [key: ScopeType]: {
+            rank: number;
+            rankChange: number;
+            value: number;
+            valueChange: number;
+        }
+    }
+}
+
+
 @Injectable({
     providedIn: 'root'
 })
 export class ScopesService {
     public scopes = signal<Scope[]>([])
+
     columns = computed((): string[] => {
         if (this.scopes().length == 0) {
             return []
@@ -27,15 +42,23 @@ export class ScopesService {
         }
         return Object.keys(this.scopes()[0].scopes)
     })
+    private readonly _cache = inject(CacheService)
 
     constructor() {
-        localStorage.getItem('scopes') && this.scopes.set(JSON.parse(localStorage.getItem('scopes')!))
+        this.load()
+    }
+
+    load() {
+        const data = this._cache.load('scopes')
+        if (data) {
+            this.scopes.set(data)
+        }
         console.log('load from local storage', this.scopes())
     }
 
     sync() {
+        this._cache.save('scopes', this.scopes())
         console.log('sync to local storage', this.scopes())
-        localStorage.setItem('scopes', JSON.stringify(this.scopes()))
     }
 
     addStudent(name: string) {
@@ -75,7 +98,26 @@ export class ScopesService {
         this.sync()
     }
 
+    delScopeType(t: ScopeType) {
+        this.scopes.update(scopes => {
+            return [
+                ...scopes.map(scope => {
+                    delete scope.scopes[t]
+                    return scope
+                })
+            ]
+        })
+        this.sync()
+    }
+
+    isStudentExist(name: string) {
+        return this.scopes().some(scope => scope.name == name)
+    }
+
     updateScope(name: string, type: ScopeType, value: number) {
+        if (!this.isStudentExist(name)) {
+            this.addStudent(name)
+        }
         this.scopes.update(scopes => {
             return scopes.map(scope => {
                 if (scope.name == name) {

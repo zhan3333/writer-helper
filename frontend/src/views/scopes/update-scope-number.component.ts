@@ -18,14 +18,16 @@ import {MatInput} from "@angular/material/input";
     ],
     template: `
         <mat-dialog-content>
-            <mat-form-field>
-                <mat-label>分数</mat-label>
-                <input [(ngModel)]="newScope" matInput type="number">
-            </mat-form-field>
+            <form (submit)="confirm()" name="update student scope">
+                <mat-form-field>
+                    <mat-label>分数</mat-label>
+                    <input [(ngModel)]="newScope" matInput type="number" name="new scope">
+                </mat-form-field>
+            </form>
         </mat-dialog-content>
         <mat-dialog-actions align="end">
             <button mat-button (click)="_dialogRef.close()">取消</button>
-            <button mat-raised-button (click)="confirm()">确认</button>
+            <button mat-raised-button type="submit" (click)="confirm()">确认</button>
         </mat-dialog-actions>
     `,
 })
@@ -38,6 +40,7 @@ export class UpdateScopeNumberComponent {
     }
 
     confirm() {
+        console.log('submit', this.newScope())
         this._dialogRef.close(this.newScope())
     }
 }

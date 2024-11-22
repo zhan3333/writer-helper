@@ -1,12 +1,13 @@
-<div class="m-2">
-    <button (click)="addStudent()" color="primary" mat-raised-button>添加学生</button>
-    <button (click)="addScopeType()" color="primary" mat-raised-button>添加考试</button>
+<div class="m-2 space-y-2">
+    <div class="space-x-2">
+        <button (click)="addStudent()" color="primary" mat-raised-button>添加学生</button>
+        <button (click)="addScopeType()" color="primary" mat-raised-button>添加考试</button>
+    </div>
     <table (matSortChange)="sortChange($event)" [dataSource]="dataSource" class="mat-elevation-z8" mat-table matSort>
         @for (column of displayedColumns(); track column) {
-
             @if (column === 'actions') {
                 <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>操作</th>
                     <td mat-cell *matCellDef="let element">
                         <button mat-icon-button (click)="delStudent(element.name)">
                             <mat-icon>delete</mat-icon>
@@ -15,22 +16,57 @@
                 </ng-container>
             } @else if (column === 'name') {
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>姓名</th>
                     <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
                 </ng-container>
             } @else {
                 <ng-container matColumnDef="{{column}}">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column }}</th>
+                    @let scopeType = column;
+                    <th mat-header-cell *matHeaderCellDef>
+                        <div class="flex items-center">
+                            <span mat-sort-header>{{ scopeType }}</span>
+                            <button mat-icon-button (click)="showScopeTypeList(scopeType)">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                        </div>
+                    </th>
                     <td mat-cell *matCellDef="let element"
-                        (click)="updateScopeNumber(element.name, column, element.scopes[column])" matRipple
+                        (click)="updateScopeNumber(element.name, column, element.scopes[scopeType].value)" matRipple
                         class="cursor-pointer">
-                        <span>{{ element.scopes[column] }}</span>
+                        @let r = rank(element, scopeType);
+                        <!--成绩-->
+                        <span class="text-xl">成绩: {{ r.scope }}</span>
+                        @if (!isFirstScopeType(scopeType)) {
+                            <span class="text-xl  text-gray-400">
+                                @if (r.scopeChange < 0) {
+                                    <span class="text-green-700">(📉{{ r.scopeChange }})</span>
+                                } @else if (r.scopeChange > 0) {
+                                    <span class="text-red-700">(📈{{ r.scopeChange }})</span>
+                                } @else {
+                                    <span></span>
+                                }
+                            </span>
+                        }
+                        <br>
+                        <!--排名-->
+                        <span class="text-gray-400">排名: {{ r.rank }}</span>
+                        @if (!isFirstScopeType(scopeType)) {
+                            <span class="text-gray-400">
+                                @if (r.rankChange < 0) {
+                                    <span class="text-green-700">(📉{{ r.rankChange }})</span>
+                                } @else if (r.rankChange > 0) {
+                                    <span class="text-red-700">(📈{{ r.rankChange }})</span>
+                                } @else {
+                                    <span></span>
+                                }
+                            </span>
+                        }
                     </td>
                 </ng-container>
             }
         }
 
-        <tr *matHeaderRowDef="displayedColumns()" mat-header-row></tr>
+        <tr *matHeaderRowDef="displayedColumns(); sticky: true" mat-header-row></tr>
         <tr *matRowDef="let row; columns: displayedColumns();" mat-row></tr>
     </table>
 </div>
