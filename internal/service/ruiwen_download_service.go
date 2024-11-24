@@ -38,7 +38,6 @@ func (s RuiWenDownloadService) Download(ctx context.Context, link string) (strin
 	doc.Find("div.article").Each(func(i int, s *goquery.Selection) {
 		// 获取元素的文本内容
 		content, err = s.Html()
-		fmt.Println("content", content)
 	})
 
 	if err != nil {
