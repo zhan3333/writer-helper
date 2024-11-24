@@ -15,6 +15,13 @@
                 </mat-form-field>
                 <button (click)="selectSaveDirectory()" color="primary" mat-raised-button>更改</button>
             </div>
+            <!--ffmpeg 目录-->
+            <div>
+                <p>ffmpeg: {{ ffmpegPath() }}</p>
+                @if (!ffmpegPath()) {
+                    <p class="text-red-700">ffmpeg 程序未找到，下载的音视频可能无法自动合并"</p>
+                }
+            </div>
             <div>
                 <p class="whitespace-pre">{{ downloadOutput() }}</p>
             </div>

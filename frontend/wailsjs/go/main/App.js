@@ -18,6 +18,10 @@ export function GetDownloadOutput() {
   return window['go']['main']['App']['GetDownloadOutput']();
 }
 
+export function GetFfmpegPath() {
+  return window['go']['main']['App']['GetFfmpegPath']();
+}
+
 export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
 }

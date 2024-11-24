@@ -8,7 +8,11 @@ import (
 	"github.com/iawia002/lux/extractors"
 	"github.com/iawia002/lux/request"
 	"github.com/iawia002/lux/utils"
+	"github.com/labstack/gommon/log"
 	"io"
+	"os/exec"
+	"path/filepath"
+	"runtime"
 	"sort"
 )
 
@@ -198,4 +202,24 @@ func printStreamInfo(data *extractors.Data, stream *extractors.Stream) {
 
 	_, _ = fmt.Fprintf(downloadOutput, " Stream:   \n") // nolint
 	printStream(stream)
+}
+
+func (s DownloadService) GetFfmpegPath() string {
+	ffmpegFileName := "ffmpeg"
+	if runtime.GOOS == "windows" {
+		ffmpegFileName = "ffmpeg.exe" // 在Windows上添加.exe擴展名
+	}
+	// 嘗試在當前目錄中查找ffmpeg
+	matches, err := filepath.Glob("./" + ffmpegFileName)
+	if err == nil && len(matches) > 0 {
+		// 如果在當前目錄找到了ffmpeg，直接返回這個路徑
+		return "./" + ffmpegFileName
+	}
+
+	path, err := exec.LookPath(ffmpegFileName)
+	if err != nil {
+		log.Errorf("lookup ffmpeg path failed: %v", err)
+		return ""
+	}
+	return path
 }

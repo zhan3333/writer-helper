@@ -125,7 +125,7 @@ export class ScopeListComponent {
             for (let line of lines) {
                 const [name, scope] = line.split('\t')
                 this.form.push(this._fb.group({
-                    name: name,
+                    name: name.replaceAll(' ', ''),
                     scope: +scope,
                 }))
             }

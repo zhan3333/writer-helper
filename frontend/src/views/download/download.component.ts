@@ -10,6 +10,7 @@ import {
     DownloadUrl,
     GetDefaultSaveDirectory,
     GetDownloadOutput,
+    GetFfmpegPath,
     SelectSaveDirectory
 } from "../../../wailsjs/go/main/App";
 
@@ -27,6 +28,7 @@ import {
         MatButton,
         MatLabel,
         MatCommonModule,
+
     ],
     templateUrl: './download.component.html',
 })
@@ -36,6 +38,7 @@ export class DownloadComponent {
     videoName = signal('');
     downloading = signal(false)
     downloadOutput = signal('')
+    ffmpegPath = signal('')
 
     snack = inject(MatSnackBar)
 
@@ -52,6 +55,9 @@ export class DownloadComponent {
                 }
             }, 500)
         })
+        effect(async () => {
+            this.ffmpegPath.set(await GetFfmpegPath())
+        });
     }
 
     async downloadVideo() {

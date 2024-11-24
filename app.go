@@ -95,3 +95,7 @@ func (a *App) DownloadRuiWenUrl(link string) (string, error) {
 func (a *App) GetDownloadOutput() string {
 	return a.downloadService.GetDownloadOutput()
 }
+
+func (a *App) GetFfmpegPath() string {
+	return a.downloadService.GetFfmpegPath()
+}

@@ -3,3 +3,5 @@ node_modules
 build/.DS_Store
 *.mp4
 *.mp3
+build/ffmpeg
+build/writer-helper-windows-amd64*

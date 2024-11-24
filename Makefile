@@ -1,6 +1,10 @@
 .PHONY: build_windows
 build_windows:
-	wails build -clean -debug -platform windows/amd64
+	wails build -clean -platform windows/amd64
+
+.PHONY: compress
+compress:
+	zip -j build/writer-helper-windows-amd64.zip build/bin/writer-helper.exe build/ffmpeg/ffmpeg.exe README.txt
 
 .PHONY: build
 build:

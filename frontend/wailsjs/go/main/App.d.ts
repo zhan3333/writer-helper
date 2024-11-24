@@ -9,6 +9,8 @@ export function GetDefaultSaveDirectory():Promise<string>;
 
 export function GetDownloadOutput():Promise<string>;
 
+export function GetFfmpegPath():Promise<string>;
+
 export function Greet(arg1:string):Promise<string>;
 
 export function SelectSaveDirectory():Promise<string>;

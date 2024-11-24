@@ -8,6 +8,7 @@ require (
 	github.com/JohannesKaufmann/html-to-markdown/v2 v2.2.0
 	github.com/PuerkitoBio/goquery v1.8.0
 	github.com/iawia002/lux v0.24.1
+	github.com/labstack/gommon v0.4.0
 	github.com/wailsapp/wails/v2 v2.9.2
 	golang.org/x/text v0.20.0
 )
@@ -46,7 +47,6 @@ require (
 	github.com/kr/pretty v0.3.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/labstack/echo/v4 v4.10.2 // indirect
-	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/leaanthony/go-ansi-parser v1.6.0 // indirect
 	github.com/leaanthony/gosod v1.0.3 // indirect
 	github.com/leaanthony/slicer v1.6.0 // indirect
