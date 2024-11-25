@@ -81,8 +81,8 @@ func (a *App) DownloadRuiWenUrl(link string) (string, error) {
 
 	}
 
-	if !strings.Contains(u.Host, "ruiwen.com") {
-		return "", fmt.Errorf("只支持 https://*.ruiwen.com, 但是传入了: %s", link)
+	if !strings.Contains(u.Host, "ruiwen.com") && !strings.Contains(u.Host, "cnrencai.com") {
+		return "", fmt.Errorf("支持 ruiwen.com, cnrencai.com: %s", link)
 	}
 
 	if out, err := a.ruiwenService.Download(a.ctx, link); err != nil {

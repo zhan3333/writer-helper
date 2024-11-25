@@ -1,5 +1,13 @@
 import {Component, inject, signal} from '@angular/core';
-import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
+import {
+    MatCard,
+    MatCardActions,
+    MatCardContent,
+    MatCardHeader,
+    MatCardSubtitle,
+    MatCardTitle,
+    MatCardTitleGroup
+} from "@angular/material/card";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
@@ -27,6 +35,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
         MatCardTitle,
         MatCardHeader,
         MatCardActions,
+        MatCardTitleGroup,
+        MatCardSubtitle,
     ],
     templateUrl: './ruiwen-download.component.html',
 })
