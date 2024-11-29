@@ -1,7 +1,13 @@
 <div class="m-2 space-y-2">
-    <div class="space-x-2">
-        <button (click)="addStudent()" color="primary" mat-raised-button>添加学生</button>
-        <button (click)="addScopeType()" color="primary" mat-raised-button>添加考试</button>
+    <div class="flex justify-between">
+        <div class="space-x-2">
+            <button (click)="addStudent()" color="primary" mat-raised-button>添加学生</button>
+            <button (click)="addScopeType()" color="primary" mat-raised-button>添加考试</button>
+            <button (click)="import()" color="primary" mat-raised-button>导入</button>
+        </div>
+        <div>
+            <button (click)="clearAllData()" color="warn" mat-raised-button>清空数据</button>
+        </div>
     </div>
     <table (matSortChange)="sortChange($event)" [dataSource]="dataSource" class="mat-elevation-z8" mat-table matSort>
         @for (column of displayedColumns(); track column) {

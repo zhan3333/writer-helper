@@ -31,6 +31,8 @@ import {MatSort, MatSortModule, Sort} from "@angular/material/sort";
 import {MatIcon, MatIconModule} from "@angular/material/icon";
 import {ConfirmService} from "../../shared/confirm/confirm.service";
 import {ScopeListChangeResult, ScopeListComponent} from "./scope-list.component";
+import {ScopeImportComponent, ScopeImportResult} from "./scope-import.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 interface Rank {
     rank: number
@@ -66,6 +68,7 @@ export class ScopesComponent {
     scopeService = inject(ScopesService)
     _dialog = inject(MatDialog)
     _confirm = inject(ConfirmService)
+    _snack = inject(MatSnackBar)
     cdRef = inject(ChangeDetectorRef)
     _sort = viewChild.required(MatSort)
     displayedColumns = computed(() => {
@@ -112,7 +115,7 @@ export class ScopesComponent {
 
     addStudent() {
         this._dialog.open(AddStudentDialog, {
-            width: '400px'
+            minWidth: '400px'
         }).afterClosed().subscribe((name: string | undefined) => {
             if (name) {
                 this.scopeService.addStudent(name)
@@ -122,7 +125,7 @@ export class ScopesComponent {
 
     addScopeType() {
         this._dialog.open(AddScopeTypeDialog, {
-            width: '400px'
+            minWidth: '400px'
         }).afterClosed().subscribe((name: string | undefined) => {
             if (name) {
                 this.scopeService.addScopeType(name)
@@ -190,6 +193,33 @@ export class ScopesComponent {
                         )
                     }
                 }
+            }
+        })
+    }
+
+    import() {
+        this._dialog.open(ScopeImportComponent, {
+            minWidth: '600px',
+            data: {}
+        }).afterClosed().subscribe((result: ScopeImportResult | null) => {
+            if (result) {
+                for (let i = 0; i < result.scopes.length; i++) {
+                    this.scopeService.updateScope(
+                        result.scopes[i].name,
+                        result.scopeType,
+                        result.scopes[i].scope
+                    )
+                }
+                this._snack.open(`${result.scopeType} 考试导入 ${result.scopes.length} 个学生成绩成功`, '关闭')
+            }
+        })
+    }
+
+    clearAllData() {
+        this._confirm.open({title: '确认清空所有数据?'}).afterClosed().subscribe(v => {
+            if (v) {
+                this.scopeService.clearAllData()
+                this._snack.open('清空成功', '关闭')
             }
         })
     }

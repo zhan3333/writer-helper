@@ -31,10 +31,11 @@ export class ScopesService {
     public scopes = signal<Scope[]>([])
 
     columns = computed((): string[] => {
+        const basicColumns = ['actions', 'name']
         if (this.scopes().length == 0) {
-            return []
+            return basicColumns
         }
-        return ['actions', 'name', ...Object.keys(this.scopes()[0].scopes)]
+        return [...basicColumns, ...Object.keys(this.scopes()[0].scopes)]
     })
     scopeTypes = computed((): string[] => {
         if (this.scopes().length == 0) {
@@ -114,7 +115,14 @@ export class ScopesService {
         return this.scopes().some(scope => scope.name == name)
     }
 
+    isScopeTypeExist(scopeType: ScopeType): boolean {
+        return this.scopes().some(scope => scope.scopes[scopeType] !== undefined)
+    }
+
     updateScope(name: string, type: ScopeType, value: number) {
+        if (!this.isScopeTypeExist(type)) {
+            this.addScopeType(type)
+        }
         if (!this.isStudentExist(name)) {
             this.addStudent(name)
         }
@@ -141,5 +149,10 @@ export class ScopesService {
                 }
             })
         })
+    }
+
+    clearAllData() {
+        this.scopes.set([])
+        this.sync()
     }
 }
