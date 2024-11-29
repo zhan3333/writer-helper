@@ -1,6 +1,9 @@
 .PHONY: build_windows
 build_windows:
 	wails build -clean -platform windows/amd64
+    # rename format to write-helper-{date}.exe
+	mv build/bin/writer-helper.exe build/bin/writer-helper-$(shell date +%Y-%m-%d).exe
+
 
 .PHONY: compress
 compress:
