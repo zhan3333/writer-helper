@@ -3,11 +3,12 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {DownloadComponent} from "../views/download/download.component";
 import {RuiwenDownloadComponent} from "../views/ruiwen-download/ruiwen-download.component";
 import {ScopesComponent} from "../views/scopes/scopes.component";
+import {DouBaoComponent} from "../views/doubao/dou-bao.component";
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [MatTabGroup, MatTab, DownloadComponent, RuiwenDownloadComponent, ScopesComponent],
+    imports: [MatTabGroup, MatTab, DownloadComponent, RuiwenDownloadComponent, ScopesComponent, DouBaoComponent],
     templateUrl: './app.component.html',
 })
 export class AppComponent {

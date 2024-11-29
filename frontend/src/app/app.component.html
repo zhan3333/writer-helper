@@ -1,12 +1,15 @@
-<mat-tab-group [(selectedIndex)]="selectedIndex">
+<mat-tab-group [(selectedIndex)]="selectedIndex" class="h-screen w-screen">
     <mat-tab label="视频下载">
         <app-download></app-download>
     </mat-tab>
-    <mat-tab label="ruiwen 下载">
+    <mat-tab label="文章下载">
         <app-ruiwen-download></app-ruiwen-download>
     </mat-tab>
     <mat-tab label="成绩">
         <app-scopes></app-scopes>
+    </mat-tab>
+    <mat-tab label="豆包 AI">
+        <app-doubao></app-doubao>
     </mat-tab>
 </mat-tab-group>
 <!--<router-outlet/>-->
