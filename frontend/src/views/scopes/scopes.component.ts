@@ -204,13 +204,17 @@ export class ScopesComponent {
         }).afterClosed().subscribe((result: ScopeImportResult | null) => {
             if (result) {
                 for (let i = 0; i < result.scopes.length; i++) {
-                    this.scopeService.updateScope(
-                        result.scopes[i].name,
-                        result.scopeType,
-                        result.scopes[i].scope
-                    )
+                    for (let scopeType in result.scopes[i].scopes) {
+                        const scope = result.scopes[i].scopes[scopeType]
+                        this.scopeService.updateScope(
+                            result.scopes[i].name,
+                            scopeType,
+                            scope
+                        )
+                    }
+
                 }
-                this._snack.open(`${result.scopeType} 考试导入 ${result.scopes.length} 个学生成绩成功`, '关闭')
+                this._snack.open(`考试导入 ${result.scopes.length} 个学生成绩成功`, '关闭')
             }
         })
     }
